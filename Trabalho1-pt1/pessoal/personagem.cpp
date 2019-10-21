@@ -1,7 +1,7 @@
 #include "personagem.h"
 
 
-Personagem::Personagem(){
+Personagem::Personagem( ) : Objeto( 3 ){
 
 }
 

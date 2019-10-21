@@ -3,13 +3,16 @@
 
 #include <objeto.h>
 
-class Carro : public Objeto
-{
+class Carro : public Objeto{
+
 public:
     Model3DS* model;
+
 public:
-    Carro();
+    Carro( );
+    Carro(Vetor3D tn, Vetor3D an, Vetor3D sn);
     void desenha();
+
 };
 
 #endif // CARRO_H

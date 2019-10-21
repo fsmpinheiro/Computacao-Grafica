@@ -15,7 +15,7 @@ public:
     bool selecionado = false;
 
 public:
-    Objeto( /*int t*/ );
+    Objeto( int t );
     virtual void desenha();
 };
 

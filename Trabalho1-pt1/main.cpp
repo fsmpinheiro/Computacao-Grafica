@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+
 #include <vector>
 
 using namespace std;
@@ -6,14 +9,15 @@ using namespace std;
 #include <gui.h>
 
 
-//#include <objeto.h>
+#include <objeto.h>
+#include <carro.h>
 //#include <personagem.h>
 //#include <casa.h>
-//#include <carro.h>
+
 
 //Model3DS model3ds("../3ds/cartest.3DS");
 
-vector<Objeto*> objetos;
+vector <Objeto*> objetosVector;
 int posSelecionado = -1;
 bool incluirObjeto = false;
 
@@ -24,148 +28,153 @@ void desenha() {
     GUI::displayInit();
     GUI::setLight(1, 0.5, 5, 1.5, true, false);
 
-    GUI::drawOrigin(0.2); //desenha as setinhas no centro
-    GUI::setColor(1,0.7,0.5);
-    GUI::drawFloor(18,9);
+    GUI::drawOrigin(0.5);   //desenha as setinhas no centro
+    GUI::setColor(0.0,0.755,0.18);
+    GUI::drawFloor(12,18);   //desenha o piso do cenário
 
-
-    GUI::displayEnd();
-
-    /*
-    GUI::displayInit();
-
-    GUI::setLight(1,1,3,5,true,false);
-    GUI::setLight(2,-1.5,0.5,-1,true,false);
-    //GUI::setLight(3,-5,3,5,true,false);
-
-    GUI::drawOrigin(1);
-
-    GUI::setColor(1,0,0);
-    GUI::drawFloor();
-
-    for (int i = 0; i < objetos.size(); ++i) {
+    for ( int i = 0; i < objetosVector.size(); i++){
         glPushMatrix();
-            objetos[i]->desenha();
+        objetosVector[i]->desenha();
         glPopMatrix();
+
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->t.x += glutGUI::dtx;
+        objetosVector[posSelecionado]->t.y += glutGUI::dty;
+        objetosVector[posSelecionado]->t.z += glutGUI::dtz;
+
+        objetosVector[posSelecionado]->a.x += glutGUI::dax;
+        objetosVector[posSelecionado]->a.y += glutGUI::day;
+        objetosVector[posSelecionado]->a.z += glutGUI::daz;
+
+        objetosVector[posSelecionado]->s.x += glutGUI::dsx;
+        objetosVector[posSelecionado]->s.y += glutGUI::dsy;
+        objetosVector[posSelecionado]->s.z += glutGUI::dsz;
     }
-
-    if (posSelecionado >= 0 and posSelecionado < objetos.size()) {
-        objetos[posSelecionado]->t.x += glutGUI::dtx;
-        objetos[posSelecionado]->t.y += glutGUI::dty;
-        objetos[posSelecionado]->t.z += glutGUI::dtz;
-
-        objetos[posSelecionado]->a.x += glutGUI::dax;
-        objetos[posSelecionado]->a.y += glutGUI::day;
-        objetos[posSelecionado]->a.z += glutGUI::daz;
-
-        objetos[posSelecionado]->s.x += glutGUI::dsx;
-        objetos[posSelecionado]->s.y += glutGUI::dsy;
-        objetos[posSelecionado]->s.z += glutGUI::dsz;
-    }
-//    glutGUI::dtx = 0.0; glutGUI::dty = 0.0; glutGUI::dtz = 0.0;
-//    glutGUI::dax = 0.0; glutGUI::day = 0.0; glutGUI::daz = 0.0;
-//    glutGUI::dsx = 0.0; glutGUI::dsy = 0.0; glutGUI::dsz = 0.0;
-
-    //objeto transformado
-    //glPushMatrix();
-//        glTranslatef(glutGUI::tx,glutGUI::ty,glutGUI::tz);
-//        glRotatef(glutGUI::az,0,0,1);
-//        glRotatef(glutGUI::ay,0,1,0);
-//        glRotatef(glutGUI::ax,1,0,0);
-//        GUI::drawOrigin(1);
-//        glScalef(glutGUI::sx,glutGUI::sy,glutGUI::sz);
-//        GUI::setColor(0,0,1);
-//        //GUI::drawBox(0,0,0, 1,1,1);
-//        //GUI::drawBox(1,1,0, 2,2,1);
-//        //casa();
-//        //personagem();
-//        //GUI::draw3ds(model3ds);
-
-    //glPopMatrix();
-
-    GUI::displayEnd();
-*/
 }
 
+
+    GUI::displayEnd();
+}
+
+void carregarArquivo(){
+    //cout << " - Começou a função CarregarArquivo" <<endl;
+    ifstream baseFile;
+    baseFile.open("../baseSaves.txt");
+    //cout <<endl <<" - Tentando carregar arquivo baseSaves" <<endl;
+
+
+    if(!baseFile){
+        cout << " - ERRO arquivo tá errado seu IMBECIL!!!" << endl;
+        exit(1);
+
+    } else {
+        //cout <<endl << " - Arquivo baseSaves carregado com sucesso" <<endl;
+        std::string line;
+        getline(baseFile, line);
+        cout <<line << " Objetos no vetor;" <<endl;
+        int n_objetos = stoi ( line );         //identifica quantos elementos estão no arquivo
+
+        int tipo = 0;                       //variável para identificar qual será o objeto a ser criado
+        double tx = 0, ty = 0, tz = 0;  //responsável pela translação
+        double ax = 0, ay = 0, az = 0;  //responsável pelas rotações
+        double sx = 0, sy = 0, sz = 0;  //responsável pela escala
+
+        for( int i = 0; i < n_objetos; i++){
+            getline(baseFile, line);
+            tipo = stoi(line);          //identifica qual objeto deve ser criado conforme salvo no arquivo
+
+            getline(baseFile, line);
+            tx = stoi(line);
+            getline(baseFile, line);
+            ty = stoi(line);
+            getline(baseFile, line);
+            tz = stoi(line);
+
+            getline(baseFile, line);
+            ax = stoi(line);
+            getline(baseFile, line);
+            ay = stoi(line);
+            getline(baseFile, line);
+            az = stoi(line);
+
+            getline(baseFile, line);
+            sx = stoi(line);
+            getline(baseFile, line);
+            sy = stoi(line);
+            getline(baseFile, line);
+            sz = stoi(line);
+
+            Vetor3D tn = Vetor3D(tx, ty, tz);
+            Vetor3D an = Vetor3D(ax, ay, az);
+            Vetor3D sn = Vetor3D(sx, sy, sz);
+
+            if ( tipo == 1 ) {          //Valor é referente ao 3ds BMW
+                objetosVector.push_back(new Carro( tn, an, sn) );
+                cout << "Objeto Carro inserido no vetor" <<endl;
+            }
+        }
+    }
+
+    baseFile.close();
+}
+
+//controle sobre os objetos no objetosVector
+void objPrevious(){
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->selecionado = false;
+    }
+    posSelecionado--;
+    if ( posSelecionado < 0 ){
+        posSelecionado = objetosVector.size() - 1;
+    }
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->selecionado = true;
+    }
+};
+
+void objNext(){
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->selecionado = false;
+    }
+    posSelecionado++;
+    posSelecionado = posSelecionado % objetosVector.size();
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->selecionado = true;
+    }
+};
 
 
 void teclado(unsigned char key, int x, int y) {
     GUI::keyInit(key, x, y);
 
     switch ( key ){
-    case 't':
-        glutGUI::trans_obj = !glutGUI::trans_obj;
-        break;
-
-    case 'l':
-        glutGUI::trans_luz = !glutGUI::trans_luz;
-        break;
-
+        case 't':
+            glutGUI::trans_obj = !glutGUI::trans_obj;
+            break;
+        case 'l':
+            glutGUI::trans_luz = !glutGUI::trans_luz;
+            break;
+        case ',':{
+            objPrevious();
+            break;
+        }
+        case '.':{
+            objNext();
+            break;
+        }
     }
-
-    /*
-    //if (!incluirObjeto) {
-        GUI::keyInit(key,x,y);
-    //}
-
-    switch (key) {
-    case 't':
-        glutGUI::trans_obj = !glutGUI::trans_obj;
-        break;
-    case 'l':
-        glutGUI::trans_luz = !glutGUI::trans_luz;
-        break;
-
-    case 'n':
-        if (posSelecionado >= 0 and posSelecionado < objetos.size()) {
-            objetos[posSelecionado]->selecionado = false;
-        }
-        posSelecionado++;
-        posSelecionado = posSelecionado%objetos.size();
-        if (posSelecionado >= 0 and posSelecionado < objetos.size()) {
-            objetos[posSelecionado]->selecionado = true;
-        }
-        break;
-    case 'b':
-        if (posSelecionado >= 0 and posSelecionado < objetos.size()) {
-            objetos[posSelecionado]->selecionado = false;
-        }
-        posSelecionado--;
-        if (posSelecionado < 0) {
-            posSelecionado = objetos.size()-1;
-        }
-        if (posSelecionado >= 0 and posSelecionado < objetos.size()) {
-            objetos[posSelecionado]->selecionado = true;
-        }
-        break;
-
-
-    case 'O':
-        incluirObjeto = !incluirObjeto;
-        break;
-    case 'p':
-        if (incluirObjeto) {
-            objetos.push_back( new Personagem() );
-        }
-        break;
-    case 'c':
-        if (incluirObjeto) {
-            objetos.push_back( new Carro() );
-        }
-        break;
-
-    default:
-        break;
-    }
-    */
 }
+
+
 
 int main(){
 
-    cout << "Hello World!" << endl;
+    cout << "Bem Vindo! A seguir, um guia dos comandos:\n" << endl;
+    cout << "Selecionar o objeto anterior: ( , )" << endl;
+    cout << "Selecionar o próximo objeto: ( . )" << endl;
 
+    carregarArquivo();
     GUI gui = GUI(1024,600,desenha,teclado);
-
 }
 
 

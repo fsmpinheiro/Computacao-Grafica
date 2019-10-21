@@ -7,7 +7,8 @@ class Casa : public Objeto{
 
 public:
     Model3DS* model;
-    Casa(int i);
+    Casa();
+    Casa( Vetor3D tn, Vetor3D an, Vetor3D sn);
     void desenha();
 };
 

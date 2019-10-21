@@ -10,14 +10,14 @@ Entrega e apresentação: 18/10/2019 (sex)
 
 	    -[1.0] heranca
 			-definir um método desenhar (virtual)
-		-a ser implementado por classes mais específicas (herdando da classe Objeto)
-			-por exemplo: Arvore, ...
+			-a ser implementado por classes mais específicas (herdando da classe Objeto)
+			 por exemplo: Arvore, ...
 	    -[0.5] transformacoes
 			-incluir atributos referentes às possíveis transformações
 			-translação/rotação/escala
 	    -[0.5] selecao
 			-incluir um atributo na classe Objeto para dizer se o objeto está ou não selecionado
-			-se deve ou não ser pintado com uma cor de destaque (branco, por exemplo)
+			 se deve ou não ser pintado com uma cor de destaque (branco, por exemplo)
 			-usá-lo como teste no método desenhar
 	    -[0.5] sist local de referencia
 	    	-incluir um atributo na classe Objeto para alternar entre desenhar ou não os eixos do sist local do objeto

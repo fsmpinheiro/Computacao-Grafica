@@ -1,12 +1,14 @@
 #include "casa.h"
 
-Casa::Casa( int ){
-    //model = new Model3DS("../3ds/");
+Casa::Casa(  ) : Objeto( 2 ){
+    model = new Model3DS("../3ds/cabana");
 }
 
-//Casa::Casa(){
-//    model = new Model3DS("../3ds");
-//}
+Casa::Casa( Vetor3D tn, Vetor3D an, Vetor3D sn ) : Objeto( 2 ){
+    t = tn; a = an; s = sn;
+    origem = false;
+    model = new Model3DS("../3ds/cabanaHouse.3ds");
+};
 
 void Casa::desenha(){
         glScalef(55,55,55);
