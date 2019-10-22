@@ -1,7 +1,7 @@
 #include "casa.h"
 
 Casa::Casa(  ) : Objeto( 2 ){
-    model = new Model3DS("../3ds/cabana");
+    model = new Model3DS("../3ds/cabanaHouse.3ds");
 }
 
 Casa::Casa( Vetor3D tn, Vetor3D an, Vetor3D sn ) : Objeto( 2 ){
@@ -11,9 +11,28 @@ Casa::Casa( Vetor3D tn, Vetor3D an, Vetor3D sn ) : Objeto( 2 ){
 };
 
 void Casa::desenha(){
-        glScalef(55,55,55);
-        model->draw();
 
+    glPushMatrix();
+        Objeto::desenha();
+        glPushMatrix();
+            glTranslatef(0.46, 0, 0);
+            glRotatef(180, 0, 1, 0);
+            glRotatef(-90, 1, 0, 0);
+
+            glScalef(2, 2, 2);
+            glScalef(0.005,0.005,0.005);
+            model->draw();
+        glPopMatrix();
+
+        glPushMatrix();
+            if( selecionado ){
+                glRotatef(-90,1,0,0);
+                GUI::setColor(0, 0, 0.9, 0.35);
+                GUI::drawBox(-0.012, -0.615, 0.001, 0.472, 0.015, 0.45);
+            }
+        glPopMatrix();
+    glPopMatrix();
+}
 
 
     /*glPushMatrix();
@@ -114,5 +133,5 @@ void Casa::desenha(){
             glVertex3f(1,1,0);
             glVertex3f(0.5,1.5,0.5);
         glEnd();
-    glPopMatrix();*/
-}
+    glPopMatrix();
+}*/

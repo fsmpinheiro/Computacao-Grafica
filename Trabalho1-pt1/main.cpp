@@ -11,8 +11,10 @@ using namespace std;
 
 #include <objeto.h>
 #include <carro.h>
+#include <casa.h>
+
 //#include <personagem.h>
-//#include <casa.h>
+
 
 
 //Model3DS model3ds("../3ds/cartest.3DS");
@@ -28,7 +30,7 @@ void desenha() {
     GUI::displayInit();
     GUI::setLight(1, 0.5, 5, 1.5, true, false);
 
-    GUI::drawOrigin(0.5);   //desenha as setinhas no centro
+    GUI::drawOrigin(0.5);   //desenha origem do cenário ao centro
     GUI::setColor(0.0,0.755,0.18);
     GUI::drawFloor(12,18);   //desenha o piso do cenário
 
@@ -74,7 +76,7 @@ void carregarArquivo(){
         cout <<line << " Objetos no vetor;" <<endl;
         int n_objetos = stoi ( line );         //identifica quantos elementos estão no arquivo
 
-        int tipo = 0;                       //variável para identificar qual será o objeto a ser criado
+        int tipo = 0;                   //variável para identificar qual será o objeto a ser criado
         double tx = 0, ty = 0, tz = 0;  //responsável pela translação
         double ax = 0, ay = 0, az = 0;  //responsável pelas rotações
         double sx = 0, sy = 0, sz = 0;  //responsável pela escala
@@ -109,8 +111,11 @@ void carregarArquivo(){
             Vetor3D sn = Vetor3D(sx, sy, sz);
 
             if ( tipo == 1 ) {          //Valor é referente ao 3ds BMW
-                objetosVector.push_back(new Carro( tn, an, sn) );
+                objetosVector.push_back( new Carro( tn, an, sn) );
                 cout << "Objeto Carro inserido no vetor" <<endl;
+            } else if ( tipo == 2 ) {
+                objetosVector.push_back( new Casa( tn, an, sn) );
+                cout << "Objeto Casa inserido no vetor" <<endl;
             }
         }
     }
@@ -142,8 +147,20 @@ void objNext(){
         objetosVector[posSelecionado]->selecionado = true;
     }
 };
+void unmark(){
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->selecionado = false;
+    }
+    glutGUI::trans_obj = false;
+}
+void drawnOrigem(){
+    if ( posSelecionado >= 0 && posSelecionado < objetosVector.size() ){
+        objetosVector[posSelecionado]->origem = !objetosVector[posSelecionado]->origem;
+    }
+}
 
 
+//comandos oriundos do teclado
 void teclado(unsigned char key, int x, int y) {
     GUI::keyInit(key, x, y);
 
@@ -162,6 +179,14 @@ void teclado(unsigned char key, int x, int y) {
             objNext();
             break;
         }
+        case ':':{
+            unmark();
+            break;
+        }
+        case '*':{
+            drawnOrigem();
+            break;
+        }
     }
 }
 
@@ -172,6 +197,8 @@ int main(){
     cout << "Bem Vindo! A seguir, um guia dos comandos:\n" << endl;
     cout << "Selecionar o objeto anterior: ( , )" << endl;
     cout << "Selecionar o próximo objeto: ( . )" << endl;
+    cout << "Desmarcar objeto selecionado: ( : )" <<endl;
+    cout << "Desenhar eixo do sistema local do objeto: ( * )" <<endl;
 
     carregarArquivo();
     GUI gui = GUI(1024,600,desenha,teclado);

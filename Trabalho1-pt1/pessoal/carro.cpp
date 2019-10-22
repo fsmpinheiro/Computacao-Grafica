@@ -17,7 +17,7 @@ void Carro::desenha(){
         glPushMatrix();
             glTranslatef(0,0,0);
             glRotatef(-90,1,0,0);
-            glScalef(2,2,2);
+            glScalef(2, 2, 2);
             glScalef(0.001,0.001,0.001);
             model->draw();
         glPopMatrix();
