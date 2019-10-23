@@ -274,16 +274,16 @@ void glutGUI::defaultKey(unsigned char key, int x, int y)
         break;
 
     case 'X':
-        autoCamMove(-90,AXIS_X,nIterations);
+        autoCamMove(-45,AXIS_X,nIterations);
         break;
     case 'x':
-        autoCamMove( 90,AXIS_X,nIterations);
+        autoCamMove( 45,AXIS_X,nIterations);
         break;
     case 'Y':
-        autoCamMove( 90,AXIS_Y,nIterations);
+        autoCamMove( 45,AXIS_Y,nIterations);
         break;
     case 'y':
-        autoCamMove(-90,AXIS_Y,nIterations);
+        autoCamMove(-45,AXIS_Y,nIterations);
         break;
     case 'Z':
         autoCamMove(  2,AXIS_Z,nIterations);

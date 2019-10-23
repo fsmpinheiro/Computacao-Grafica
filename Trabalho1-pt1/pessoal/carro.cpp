@@ -4,7 +4,7 @@ Carro::Carro() : Objeto( 1 ){
     model = new Model3DS("../3ds/bmwX5_4.3ds");
 }
 
-Carro::Carro(Vetor3D tn, Vetor3D an, Vetor3D sn) : Objeto( 1 ){
+Carro::Carro( Vetor3D tn, Vetor3D an, Vetor3D sn ) : Objeto( 1 ){
     t = tn; a = an; s = sn;
     origem = false;
     model = new Model3DS("../3ds/bmwX5_4.3ds");
