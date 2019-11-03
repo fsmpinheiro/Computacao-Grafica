@@ -2,6 +2,7 @@
 #define PERSONAGEM_H
 
 #include <objeto.h>
+#include "Desenha.h"
 
 class Personagem : public Objeto{
 

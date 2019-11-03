@@ -1,4 +1,5 @@
 #include "personagem.h"
+#include "Desenha.h"
 
 Personagem::Personagem( ) : Objeto( 3 ){
 }
@@ -7,7 +8,8 @@ Personagem::Personagem( Vetor3D tn, Vetor3D an, Vetor3D sn ) : Objeto( 3 ){
     origem = false;
 }
 void Personagem::desenha(){     //Sonic Meme base from YouTube
-    Vetor3D bodyColor = Vetor3D( 0.051, 0.153, 0.9 ) ;
+    Vetor3D bodyColor1 = Vetor3D( 0.051, 0.153, 0.9 );
+    Vetor3D bodyColor2 = Vetor3D( 1    , 0.8  , 0.5 );
 
     glPushMatrix();
             Objeto::desenha();
@@ -19,14 +21,14 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                 //tronco
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(0, 1, 0);
                     glScalef(0.6, 0.7, 0.5);
                     glutSolidSphere(0.99, 15, 15);
                 glPopMatrix();
 
                 glPushMatrix();
-                    GUI::setColor(1, 0.8, 0.5);
+                    GUI::setColor( bodyColor2.x, bodyColor2.y, bodyColor2.z );
                     glTranslatef(0, 1, 0.259);
                     glScalef(0.85, 1.02, 0.55);
                     glutSolidSphere(0.5, 15, 9);
@@ -34,7 +36,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                 //pescoço
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(0, 1.70, 0);
                     glScalef(0.42, 0.54, 0.42);
                     glRotatef(90, 0, 1, 0);
@@ -44,7 +46,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                 //cabeça
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(0, 2.15, 0);
                     glScalef(0.92, 0.92, 0.92);
                     glutSolidSphere(0.42, 30, 20);
@@ -52,7 +54,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                     //orelhas
                     glPushMatrix();
-                        GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z);
+                        GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z);
                         glTranslatef(-2,1, 0);
                         glRotatef(-90, 1, 0, 0);
                             //     y, _ , _
@@ -60,7 +62,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                         glutSolidCone(0.5,1,3,0);
                         //orelha-parte interna
                         glPushMatrix();
-                            GUI::setColor( bodyColor.x + 0.6, bodyColor.y, bodyColor.z + 0.2);
+                            GUI::setColor( bodyColor2.x, bodyColor2.y, bodyColor2.z );
                             glTranslatef(-0.25, 0, 0.0045);
                                     //    z, x, y
                             glRotatef(13.9, 0, 1, 0);
@@ -116,7 +118,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                         //Focinho
                         glPushMatrix();
-                            GUI::setColor(1, 0.8, 0.5);
+                            GUI::setColor( bodyColor2.x, bodyColor2.y, bodyColor2.z );
                             glTranslatef(0, 2.05, 0.255);
                             glRotatef(15, 1, 0, 0);
                             glScalef(0.9, 0.85, 0.5);
@@ -125,7 +127,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                         //Espinhos
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(-0.37, 2.21, 0);
                             glRotatef(0, 1, 0, 0);
                             glRotatef(-90, 0, 1, 0);
@@ -135,7 +137,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
 
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(-0.225, 2.46, 0);
                             glRotatef(90, 1, 0, 0);
                             glRotatef(-140, 0, 1, 0);
@@ -143,7 +145,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                             glutSolidCone(0.060, 0.5, 5, 1);
                         glPopMatrix();
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0, 2.515, 0);
                             glRotatef(-90, 1, 0, 0);
                             glRotatef(0, 0, 1, 0);
@@ -151,7 +153,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                             glutSolidCone(0.060, 0.5, 5, 1);
                         glPopMatrix();
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0.180, 2.46, 0);
                             glRotatef(-90, 1, 0, 0);
                             glRotatef(35, 0, 1, 0);
@@ -160,7 +162,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                         glPopMatrix();
 
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0.37, 2.21, 0);
                             glRotatef(0, 1, 0, 0);
                             glRotatef(90, 0, 1, 0);
@@ -170,7 +172,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                         //espinhos-nuca
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(-0.28, 2.21, -0.255);
                             glRotatef(0, 1, 0, 0);
                             glRotatef(222, 0, 1, 0);
@@ -178,7 +180,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                             glutSolidCone(0.060, 0.5, 5, 1);
                         glPopMatrix();
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0, 2.21, -0.371);
                             glRotatef(0, 1, 0, 0);
                             glRotatef(180, 0, 1, 0);
@@ -186,7 +188,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                             glutSolidCone(0.060, 0.5, 5, 1);
                         glPopMatrix();
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0.28, 2.21, -0.255);
                             glRotatef(0, 1, 0, 0);
                             glRotatef(132, 0, 1, 0);
@@ -195,7 +197,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                         glPopMatrix();
 
                         glPushMatrix();
-                            GUI::setColor(bodyColor.x, bodyColor.y, bodyColor.z);
+                            GUI::setColor(bodyColor1.x, bodyColor1.y, bodyColor1.z);
                             glTranslatef(0, 2.41, -0.283);
                             glRotatef(45, 1, 0, 0);
                             glRotatef(180, 0, 1, 0);
@@ -208,20 +210,21 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                 //Perna-esquerda
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(-0.25, 0.08, 0);
 
                     glRotatef(-3, 0, 0, 1);
-                    //glRotatef(90, 0, 1, 0);
                     glScalef(0.17, 1.5, 0.17);
+                    //gluDisk();
+                    //Desenha::gluClosedCylinder(4, 1, 1, 1, 1, 1);
                     glutSolidSphere(0.42, 20, 3);
                 glPopMatrix();
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(-0.28, -0.6, 0);
                     glRotatef(-1, 0, 0, 1);
                     glScalef(0.17, 1.5, 0.17);
-                    glutSolidSphere(0.42, 20, 3);
+                    //glutSolidSphere(0.42, 20, 3);
                 glPopMatrix();
                     //Pé-esquerdo
                     glPushMatrix();
@@ -263,7 +266,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
 
                 //Perna-direita
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(0.25, 0.08, 0);
 
                     glRotatef(3, 0, 0, 1);
@@ -272,7 +275,7 @@ void Personagem::desenha(){     //Sonic Meme base from YouTube
                     glutSolidSphere(0.42, 20, 3);
                 glPopMatrix();
                 glPushMatrix();
-                    GUI::setColor( bodyColor.x, bodyColor.y, bodyColor.z );
+                    GUI::setColor( bodyColor1.x, bodyColor1.y, bodyColor1.z );
                     glTranslatef(0.28, -0.6, 0);
                     glRotatef(1, 0, 0, 1);
                     glScalef(0.17, 1.5, 0.17);

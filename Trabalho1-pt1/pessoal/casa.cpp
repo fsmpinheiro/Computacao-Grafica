@@ -21,7 +21,10 @@ void Casa::desenha(){
 
             glScalef(2, 2, 2);
             glScalef(0.005,0.005,0.005);
-            model->draw();
+            //model->draw();
+            GLUquadric* quadric = gluNewQuadric();
+            Desenha::gluCapsule(quadric,20,20,20,20,20);
+            gluDeleteQuadric(quadric);
         glPopMatrix();
 
         glPushMatrix();
